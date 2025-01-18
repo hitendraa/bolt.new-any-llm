@@ -3,7 +3,9 @@
 
 Welcome to bolt.diy, the official open source version of Bolt.new (previously known as oTToDev and bolt.new ANY LLM), which allows you to choose the LLM that you use for each prompt! Currently, you can use OpenAI, Anthropic, Ollama, OpenRouter, Gemini, LMStudio, Mistral, xAI, HuggingFace, DeepSeek, or Groq models - and it is easily extended to use any other model supported by the Vercel AI SDK! See the instructions below for running this locally and extending it to include more models.
 
-Check the [bolt.diy Docs](https://stackblitz-labs.github.io/bolt.diy/) for more information. 
+Check the [bolt.diy Docs](https://stackblitz-labs.github.io/bolt.diy/) for more information.
+
+Also [this pinned post in our community](https://thinktank.ottomator.ai/t/videos-tutorial-helpful-content/3243) has a bunch of incredible resources for running and deploying bolt.diy yourself!
 
 We have also launched an experimental agent called the "bolt.diy Expert" that can answer common questions about bolt.diy. Find it here on the [oTTomator Live Agent Studio](https://studio.ottomator.ai/).
 
@@ -23,8 +25,15 @@ bolt.diy was originally started by [Cole Medin](https://www.youtube.com/@ColeMed
 
 ## Join the community
 
-[Join the bolt.diy community here, in the thinktank on ottomator.ai!](https://thinktank.ottomator.ai)
+[Join the bolt.diy community here, in the oTTomator Think Tank!](https://thinktank.ottomator.ai)
 
+## Project management
+
+Bolt.diy is a community effort! Still, the core team of contributors aims at organizing the project in way that allows
+you to understand where the current areas of focus are.
+
+If you want to know what we are working on, what we are planning to work on, or if you want to contribute to the
+project, please check the [project management guide](./PROJECT.md) to get started easily.
 
 ## Requested Additions
 
@@ -47,6 +56,7 @@ bolt.diy was originally started by [Cole Medin](https://www.youtube.com/@ColeMed
 - ✅ Bolt terminal to see the output of LLM run commands (@thecodacus)
 - ✅ Streaming of code output (@thecodacus)
 - ✅ Ability to revert code to earlier version (@wonderwhy-er)
+- ✅ Chat history backup and restore functionality (@sidbetatester)
 - ✅ Cohere Integration (@hasanraiyan)
 - ✅ Dynamic model max token length (@hasanraiyan)
 - ✅ Better prompt enhancing (@SujalXplores)
@@ -64,6 +74,8 @@ bolt.diy was originally started by [Cole Medin](https://www.youtube.com/@ColeMed
 - ✅ Detect terminal Errors and ask bolt to fix it (@thecodacus)
 - ✅ Detect preview Errors and ask bolt to fix it (@wonderwhy-er)
 - ✅ Add Starter Template Options (@thecodacus)
+- ✅ Perplexity Integration (@meetpateltech)
+- ✅ AWS Bedrock Integration (@kunjabijukchhe)
 - ⬜ **HIGH PRIORITY** - Prevent bolt from rewriting files as often (file locking and diffs)
 - ⬜ **HIGH PRIORITY** - Better prompting for smaller LLMs (code window sometimes doesn't start)
 - ⬜ **HIGH PRIORITY** - Run agents in the backend as opposed to a single model call
@@ -73,8 +85,9 @@ bolt.diy was originally started by [Cole Medin](https://www.youtube.com/@ColeMed
 - ⬜ Upload documents for knowledge - UI design templates, a code base to reference coding style, etc.
 - ⬜ Voice prompting
 - ⬜ Azure Open AI API Integration
-- ✅ Perplexity Integration (@meetpateltech)
 - ⬜ Vertex AI Integration
+- ⬜ Granite Integration 
+- ⬜ Popout Window for Web Container
 
 ## Features
 

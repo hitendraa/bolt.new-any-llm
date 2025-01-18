@@ -137,38 +137,40 @@ export const ChatImpl = memo(
 
     const [apiKeys, setApiKeys] = useState<Record<string, string>>({});
 
-    const { messages, isLoading, input, handleInputChange, setInput, stop, append, setMessages, reload } = useChat({
-      api: '/api/chat',
-      body: {
-        apiKeys,
-        files,
-        promptId,
-        contextOptimization: contextOptimizationEnabled,
-      },
-      sendExtraMessageFields: true,
-      onError: (error) => {
-        logger.error('Request failed\n\n', error);
-        toast.error(
-          'There was an error processing your request: ' + (error.message ? error.message : 'No details were returned'),
-        );
-      },
-      onFinish: (message, response) => {
-        const usage = response.usage;
+    const { messages, isLoading, input, handleInputChange, setInput, stop, append, setMessages, reload, error } =
+      useChat({
+        api: '/api/chat',
+        body: {
+          apiKeys,
+          files,
+          promptId,
+          contextOptimization: contextOptimizationEnabled,
+        },
+        sendExtraMessageFields: true,
+        onError: (e) => {
+          logger.error('Request failed\n\n', e, error);
+          toast.error(
+            'There was an error processing your request: ' + (e.message ? e.message : 'No details were returned'),
+          );
+        },
+        onFinish: (message, response) => {
+          const usage = response.usage;
 
-        if (usage) {
-          console.log('Token usage:', usage);
+          if (usage) {
+            console.log('Token usage:', usage);
 
-          // You can now use the usage data as needed
-        }
+            // You can now use the usage data as needed
+          }
 
-        logger.debug('Finished streaming');
-      },
-      initialMessages,
-      initialInput: Cookies.get(PROMPT_COOKIE_KEY) || '',
-    });
+          logger.debug('Finished streaming');
+        },
+        initialMessages,
+        initialInput: Cookies.get(PROMPT_COOKIE_KEY) || '',
+      });
     useEffect(() => {
       const prompt = searchParams.get('prompt');
-      console.log(prompt, searchParams, model, provider);
+
+      // console.log(prompt, searchParams, model, provider);
 
       if (prompt) {
         setSearchParams({});
@@ -262,6 +264,10 @@ export const ChatImpl = memo(
        */
       await workbenchStore.saveAllFiles();
 
+      if (error != null) {
+        setMessages(messages.slice(0, -1));
+      }
+
       const fileModifications = workbenchStore.getFileModifcations();
 
       chatStore.setKey('aborted', false);
@@ -289,14 +295,22 @@ export const ChatImpl = memo(
 
         // reload();
 
-        const template = await selectStarterTemplate({
+        const { template, title } = await selectStarterTemplate({
           message: messageInput,
           model,
           provider,
         });
 
         if (template !== 'blank') {
-          const temResp = await getTemplates(template);
+          const temResp = await getTemplates(template, title).catch((e) => {
+            if (e.message.includes('rate limit')) {
+              toast.warning('Rate limit exceeded. Skipping starter template\n Continuing with blank template');
+            } else {
+              toast.warning('Failed to import starter template\n Continuing with blank template');
+            }
+
+            return null;
+          });
 
           if (temResp) {
             const { assistantMessage, userMessage } = temResp;
